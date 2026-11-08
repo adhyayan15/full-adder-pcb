@@ -59,6 +59,15 @@ The schematic uses +5 V and GND power nets. The supplied Gerber job describes a 
 
 Before ordering a board, run ERC and DRC, review any unconnected nets, and confirm power connections, IC supply decoupling, unused gate inputs, switch input levels, and LED drive against the component datasheets. No passing ERC/DRC report is included here.
 
+### Interpreting the manufacturing exports
+
+The [Gerber job file](manufacturing/Full_Adder_PCB-job.gbrjob) lists seven `.gbr` layer files under `FilesAttributes`; it does not list the two drill files. Include the drill files separately when reviewing the exported package:
+
+- [Full_Adder_PCB-PTH.drl](manufacturing/Full_Adder_PCB-PTH.drl) contains the plated through-hole coordinates, with 0.800 mm and 0.900 mm drill tools declared in metric units.
+- [Full_Adder_PCB-NPTH.drl](manufacturing/Full_Adder_PCB-NPTH.drl) is a non-plated drill export containing headers and an end marker but no drill tools or hole coordinates. Its presence does not indicate that mounting holes have been designed.
+
+After a PCB edit, regenerate the Gerbers, job file, and drill outputs together, then inspect that exact set against the updated board. The checked-in exports are snapshots and do not update when the editable KiCad files change.
+
 ## Repository housekeeping
 
 The source files and manufacturing exports retain the original design contents. Upload-added filename suffixes were removed so the KiCad project files share a base name and the Gerber job references resolve correctly. Temporary KiCad lock files and machine-local `.kicad_prl` settings are excluded.
